@@ -58,17 +58,17 @@ namespace :weather do
         wind_dir_name = row.xpath("./td[contains(@headers, 'obs-wind-dir')]").text
         wind_dir = WIND_DIR_MAPPINGS[wind_dir_name.to_sym]
 
-        # Create a new reading.
-        reading = Reading.new(
+        # Create a new observation.
+        observation = Observation.new(
           temperature: temp,
           rainfall: rain,
           wind_speed: wind_speed,
           wind_dir: wind_dir,
           timestamp: Time.now
         )
-        reading.source = source
-        reading.location = location
-        reading.save
+        observation.source = source
+        observation.location = location
+        observation.save
       end
     end
   end
@@ -85,30 +85,30 @@ namespace :weather do
 
       # Include previous rainfall if it exists. Subtract nine hours to make things easier.
       observation_time = Time.at(current_data[:time])
-      last_reading = location.readings.where(source: source).last
-      if last_reading
-        last_reading_time = last_reading.timestamp.to_time
-        if (last_reading_time - 9.hours).to_date == (observation_time - 9.hours).to_date
-          rainfall = last_reading.rainfall
+      last_observation = location.observations.where(source: source).last
+      if last_observation
+        last_observation_time = last_observation.timestamp.to_time
+        if (last_observation_time - 9.hours).to_date == (observation_time - 9.hours).to_date
+          rainfall = last_observation.rainfall
         end
       end
 
       # Calculate new cumulative rainfall total.
       rainfall ||= 0
-      last_reading_time ||= (observation_time - 9.hours).to_date.to_time + 9.hours
-      rainfall +=  current_data[:precipIntensity] * current_data[:precipProbability] * (observation_time - last_reading_time) / 3600
+      last_observation_time ||= (observation_time - 9.hours).to_date.to_time + 9.hours
+      rainfall +=  current_data[:precipIntensity] * current_data[:precipProbability] * (observation_time - last_observation_time) / 3600
 
-      # Create a new reading.
-      reading = Reading.new(
+      # Create a new observation.
+      observation = Observation.new(
         temperature: current_data[:temperature],
         rainfall: rainfall,
         wind_speed: current_data[:windSpeed] * 3.6,
         wind_dir: current_data[:windBearing],
         timestamp: observation_time
       )
-      reading.source = source
-      reading.location = location
-      reading.save
+      observation.source = source
+      observation.location = location
+      observation.save
     end
   end
 
