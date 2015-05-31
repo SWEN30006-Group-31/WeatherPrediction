@@ -11,15 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150531115722) do
+ActiveRecord::Schema.define(version: 20150531120213) do
 
   create_table "locations", force: :cascade do |t|
     t.string   "name"
     t.float    "lat"
     t.float    "long"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "observation_id"
   end
+
+  add_index "locations", ["observation_id"], name: "index_locations_on_observation_id"
 
   create_table "observations", force: :cascade do |t|
     t.float    "temp"
@@ -34,8 +37,11 @@ ActiveRecord::Schema.define(version: 20150531115722) do
   create_table "postcodes", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "location_id"
   end
+
+  add_index "postcodes", ["location_id"], name: "index_postcodes_on_location_id"
 
 end
