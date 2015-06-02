@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602073809) do
+ActiveRecord::Schema.define(version: 20150602081849) do
 
   create_table "locations", force: :cascade do |t|
     t.string   "name"
@@ -32,16 +32,14 @@ ActiveRecord::Schema.define(version: 20150602073809) do
     t.float    "wind_speed"
     t.float    "wind_dir"
     t.date     "timestamp"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "weather_batch_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "location_id"
     t.integer  "source_id"
   end
 
   add_index "observations", ["location_id"], name: "index_observations_on_location_id"
   add_index "observations", ["source_id"], name: "index_observations_on_source_id"
-  add_index "observations", ["weather_batch_id"], name: "index_observations_on_weather_batch_id"
 
   create_table "postcodes", force: :cascade do |t|
     t.integer  "code"
@@ -51,22 +49,27 @@ ActiveRecord::Schema.define(version: 20150602073809) do
   end
 
   create_table "predictions", force: :cascade do |t|
-    t.float    "temperature_probability"
+    t.float    "rainfall"
+    t.float    "rainfall_probability"
+    t.float    "dew_point"
     t.float    "dew_probability"
-    t.float    "rain_probability"
-    t.float    "wind_probability"
+    t.float    "temperature"
+    t.float    "temperature_probability"
+    t.float    "wind_speed"
+    t.float    "wind_speed_probability"
+    t.float    "wind_dir"
+    t.float    "wind_dir_probability"
+    t.date     "timestamp"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "location_id"
   end
+
+  add_index "predictions", ["location_id"], name: "index_predictions_on_location_id"
 
   create_table "sources", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "weather_batches", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,13 +1,27 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  temperature_probability: 1.5
+  rainfall: 1.5
+  rainfall_probability: 1.5
+  dew_point: 1.5
   dew_probability: 1.5
-  rain_probability: 1.5
-  wind_probability: 1.5
+  temperature: 1.5
+  temperature_probability: 1.5
+  wind_speed: 1.5
+  wind_speed_probability: 1.5
+  wind_dir: 1.5
+  wind_dir_probability: 1.5
+  timestamp: 2015-06-02
 
 two:
-  temperature_probability: 1.5
+  rainfall: 1.5
+  rainfall_probability: 1.5
+  dew_point: 1.5
   dew_probability: 1.5
-  rain_probability: 1.5
-  wind_probability: 1.5
+  temperature: 1.5
+  temperature_probability: 1.5
+  wind_speed: 1.5
+  wind_speed_probability: 1.5
+  wind_dir: 1.5
+  wind_dir_probability: 1.5
+  timestamp: 2015-06-02
