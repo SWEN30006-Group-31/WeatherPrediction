@@ -28,13 +28,22 @@ class Location < ActiveRecord::Base
 	# Location.get(id) does this?
 	#I agree
 	def self.find_location locationID
-		
+		return Location.get(locationID)
 	end
 	#shouldnt put in controller?
+	# I agree it should be placed in the controller - Patrick
 	def self.find_nearest_location lat,long
-
-
-
+		active_locations = Location.where(active: true)
+		max_distance = 10000000000
+		nearest_location = Location.new
+		active_locations.each do |location|
+			distance = (location.lat - lat )**2 + (location.lon - long)**2
+			if distance < max_distance
+				max_distance = distance
+				nearest_location = location
+			end
+		end
+		return nearest_location
 	end
 	#shouldnt put in controller?
 	def self.get_weather (*args)
