@@ -10,21 +10,18 @@ class Location < ActiveRecord::Base
 	end
 
 	# needed? location should be added to observation as it is the parent
-	def add_observation observation,time
-		Observation.time.location = self
+	def add_observation observation
+		Observation.location = self
 	end
-
-
 	# why does this need location parameter?
-	def self.retrive_observation location,time
+	def self.retrive_observation time
 		observationData = Array.new
-		data[:temperature]=Observation.time.location.temperature
-		data[:dew_point]=Observation.time.location.dew_point
-		data[:rain] = Observation.time.location.dew_point
-		data[:wind_speed] = Observation.time.location.wind_speed
-		data[:wind_direction] = Observation.time.location.wind_direction
+		data[:temperature]=Observation.time.temperature
+		data[:dew_point]=Observation.time.dew_point
+		data[:rain] = Observation.time.dew_point
+		data[:wind_speed] = Observation.time.wind_speed
+		data[:wind_direction] = Observation.time.wind_direction
 		observationData.push(data)
-		end
 		return observationData
 	end
 
@@ -35,6 +32,10 @@ class Location < ActiveRecord::Base
 	end
 
 	def self.find_nearest_location lat,long
+		
+
+
+
 
 	end
 
