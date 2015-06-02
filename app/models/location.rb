@@ -8,4 +8,23 @@ class Location < ActiveRecord::Base
 	def self.active_locations
 		self.where(active: true)
 	end
+
+	def add_observation observation
+
+	end
+
+	def retrive_observation location,time
+	end
+
+	def find_location locationID
+	end
+
+	def find_nearest_location lat,long
+	end
+
+	def get_weather (*args)
+	end
+
+	def get_prediction (*args)
+	end
 end
