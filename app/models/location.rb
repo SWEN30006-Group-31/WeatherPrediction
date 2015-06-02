@@ -9,22 +9,25 @@ class Location < ActiveRecord::Base
 		self.where(active: true)
 	end
 
-	def self.add_observation observation
-
+	# needed? location should be added to observation as it is the parent
+	def add_observation observation
+		observation.location = self
 	end
 
-	def self.retrive_observation location,time
+	# why does this need location parameter?
+	def retrive_observations location,time
 	end
 
-	def self.find_location locationID
+	# Location.get(id) does this?
+	def find_location locationID
 	end
 
-	def self.find_nearest_location lat,long
+	def find_nearest_location lat,long
 	end
 
-	def self.get_weather (*args)
+	def get_weather (*args)
 	end
 
-	def self.get_prediction (*args)
+	def get_prediction (*args)
 	end
 end
