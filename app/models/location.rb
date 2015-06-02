@@ -30,15 +30,13 @@ class Location < ActiveRecord::Base
 	def self.find_location locationID
 		
 	end
-
+	#shouldnt put in controller?
 	def self.find_nearest_location lat,long
-		
-
 
 
 
 	end
-
+	#shouldnt put in controller?
 	def self.get_weather (*args)
 		if args.size == 2
 			#get weather according to the Location ID
@@ -46,7 +44,7 @@ class Location < ActiveRecord::Base
 			#get weather according to the lat long
 		end
 	end
-
+	#shouldnt put in controller?
 	def self.get_prediction (*args)
 		if args.size == 2
 			#get prediction according to the location ID
