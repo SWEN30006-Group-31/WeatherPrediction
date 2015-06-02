@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  temperature_probability: 1.5
+  dew_probability: 1.5
+  rain_probability: 1.5
+  wind_probability: 1.5
+
+two:
+  temperature_probability: 1.5
+  dew_probability: 1.5
+  rain_probability: 1.5
+  wind_probability: 1.5

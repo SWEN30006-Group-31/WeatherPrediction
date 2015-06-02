@@ -2,12 +2,8 @@
 
 one:
   name: MyString
-  lat: 1.5
-  lon: 1.5
-  active: false
+  url: MyString
 
 two:
   name: MyString
-  lat: 1.5
-  lon: 1.5
-  active: false
+  url: MyString
