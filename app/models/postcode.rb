@@ -2,11 +2,15 @@ class Postcode < ActiveRecord::Base
 	has_many :locations
 	has_many :observations, :through => :locations
 
-	def get_stations
+	def self.get_stations
+		
 	end
 
-	def find_nearest_location Postcode
-
+	def self.find_nearest_location postcode
+		location_list = Location.all
+		location_list.each do |location|
+			
+		end
 	end
 
 end
