@@ -14,7 +14,7 @@ namespace :predict do
 
       # the arr_ticket is used to keep
       # the information of the regression
-      # arr_ticket ["regression_type", distance, "equation"]
+      # arr_ticket ["regression_type", distance, "equation",a,b]
       def judge_ticket str
         case str
           when "linear"
@@ -72,9 +72,10 @@ namespace :predict do
           stra ="#{a}"
         end
         equation = "#{b}x #{stra}"
+        coefficients = [a,b]
 
         # 6. return arr_ticket
-        arr_ticket= ["linear", distance, equation] # ticket for linear
+        arr_ticket= ["linear", distance, equation,coefficients] # ticket for linear
         return arr_ticket
       end
 
@@ -131,7 +132,7 @@ namespace :predict do
 
         equation = polynomial.reverse.join(' ')
         # 6.get arr_ticket
-        arr_ticket = ["polynomial", distance_and_coefficients[0][0], equation]
+        arr_ticket = ["polynomial", distance_and_coefficients[0][0], equation,coefficients_closet]
         return arr_ticket
       end
 
@@ -181,8 +182,9 @@ namespace :predict do
           arr_ticket[2] = "Cannot perform exponential regression on this data"
         end
         #7. generate arr_ticket
+        coefficients = [a,b]
         if arr_ticket[2] == nil
-          arr_ticket= ["exponential", distance, equation] # ticket for linear
+          arr_ticket= ["exponential", distance, equation,coefficients] # ticket for linear
         end
         return arr_ticket
 
@@ -241,8 +243,9 @@ namespace :predict do
         end
 
         #6. generate arr_ticket
+        coefficients = [a,b]
         if arr_ticket[2] == nil
-          arr_ticket= ["logarithmic", distance, equation] # ticket for linear
+          arr_ticket= ["logarithmic", distance, equation,coefficients] # ticket for linear
         end
         return arr_ticket
       end
@@ -260,7 +263,7 @@ namespace :predict do
         return distance
       end
 
-      #E. best_fit
+      #E. best_fit arr_ticket= ["linear", distance, equation,coefficients]
       def best_fit
 
         # get all the arr_ticket for all regression types
@@ -285,33 +288,71 @@ namespace :predict do
         # the first one in the array
         # possesses the smallest distance
         puts arr_bestfit[0][2]
+        return arr_bestfit
       end
     end
 
-  # #1. read files
-  #   fileData=CSV.parse(File.read(ARGV[0]))
-  #   fileData.delete_at(0)
-  #   arr_x = Array.new
-  #   arr_y = Array.new
-  #   fileData.each do |x|
-  #     arr_x << x[0].to_f
-  #     arr_y << x[1].to_f
-  #   end
-  # # 2. create new instance
-  #   c = Regression.new(arr_x, arr_y)
-  # # 3. judge regression type
-  #   if ARGV[1] == "best_fit"
-  #     c.best_fit
-  #   else
-  #     c.judge_ticket ARGV[1]
-  #   end 
+    predict temperature
+    @observations = Observation.all
+    @locations = Location.all
+    arr_y_tem = []
+    arr_x = []
+    for location in @locations
+      i = 0
+      for record in location.observations
+        arr_y_tem << record.temperature
+        arr_x << i
+        i+=1
+
+        # to get the best fit
+        # get the type of the best_fit regression
+        # ["linear", distance, equation,coefficients]
+        function_info= Regression.new(arr_x, arr_y_tem).best_fit
+        @prediction = Prediction.new
+        @prediction.temperature = getValue(function_info[0],arr_x,function_info[3])
+      end
+    end
+
+
+
+
+    def getValue best_type, arr_x,coefficients
+      x = arr_x.last + 1
+      if tem_best_type =="linear"
+
+        y = coeffieicnts[1] * x + coeffieients[0]
+      end
+      if tem_best_type =="polynomial"
+
+        y = 0
+        i = 0
+        for coe in coefficients
+          y = y + coe * (x ** i)
+          i += 1
+        end
+      end
+      if tem_best_type == "exponential"
+        y = coefficients[0]*(e ** (coefficients[1] * x))
+
+      end
+      if tem_best_type == "logarithmic"
+        y = coefficients[1]* Math.log(x) + conefficients[0] *x
+
+      end
+
+      return y
+
+    end
+
+
+
+
+
+
   end
 
 
-# Scrape the BOM site for data.
-  task :scrape_bom => :environment do
 
-  end
 
 
 
