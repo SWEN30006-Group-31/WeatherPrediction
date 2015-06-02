@@ -1,6 +1,7 @@
 class Postcode < ActiveRecord::Base
 	has_many :locations
 	has_many :observations, :through => :locations
+	has_many :predictions, :through => :locations
 
 	def self.get_stations
 		
@@ -11,6 +12,5 @@ class Postcode < ActiveRecord::Base
 		location_list.each do |location|
 			
 		end
-	end
 
 end
