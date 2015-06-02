@@ -8,9 +8,13 @@ class Postcode < ActiveRecord::Base
 	end
 
 	def self.find_nearest_location postcode
-		location_list = Location.all
-		location_list.each do |location|
-			
+		given_postcode = Postcode.find(code: postcode)
+		active_location_list = Location.where(active: true)
+		max_distance = 100000000000000
+		# Find the nearest location
+		active_location_list.each do |location|
+			distance = location.lat
 		end
+	end
 
 end
