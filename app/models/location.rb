@@ -14,20 +14,44 @@ class Location < ActiveRecord::Base
 		observation.location = self
 	end
 
+
 	# why does this need location parameter?
-	def retrive_observations location,time
+	def self.retrive_observation location,time
+		#where's time attribute? 
+		observationData = Array.new
+		data[:temperature]=location.Observation.temperature
+		data[:dew_point]=location.Observation.dew_point
+		data[:rain] = location.Observation.dew_point
+		data[:wind_speed] = location.Observation.wind_speed
+		data[:wind_direction] = location.Observation.wind_direction
+		observationData.push(data)
+		end
+		return observationData
 	end
 
 	# Location.get(id) does this?
-	def find_location locationID
+	def self.find_location locationID
+		
 	end
 
-	def find_nearest_location lat,long
+	def self.find_nearest_location lat,long
+
 	end
 
-	def get_weather (*args)
+	def self.get_weather (*args)
+		if args.size == 2
+			#get weather according to the Location ID
+		else
+			#get weather according to the lat long
+		end
 	end
 
-	def get_prediction (*args)
+	def self.get_prediction (*args)
+		if args.size == 2
+			#get prediction according to the location ID
+		else
+			#get prediction according to the lat long
+		end
+
 	end
 end
