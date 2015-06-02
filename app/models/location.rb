@@ -10,26 +10,26 @@ class Location < ActiveRecord::Base
 	end
 
 	# needed? location should be added to observation as it is the parent
-	def add_observation observation
-		observation.location = self
+	def add_observation observation,time
+		Observation.time.location = self
 	end
 
 
 	# why does this need location parameter?
 	def self.retrive_observation location,time
-		#where's time attribute? 
 		observationData = Array.new
-		data[:temperature]=location.Observation.temperature
-		data[:dew_point]=location.Observation.dew_point
-		data[:rain] = location.Observation.dew_point
-		data[:wind_speed] = location.Observation.wind_speed
-		data[:wind_direction] = location.Observation.wind_direction
+		data[:temperature]=Observation.time.location.temperature
+		data[:dew_point]=Observation.time.location.dew_point
+		data[:rain] = Observation.time.location.dew_point
+		data[:wind_speed] = Observation.time.location.wind_speed
+		data[:wind_direction] = Observation.time.location.wind_direction
 		observationData.push(data)
 		end
 		return observationData
 	end
 
 	# Location.get(id) does this?
+	#I agree
 	def self.find_location locationID
 		
 	end
