@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  get 'location_controller/init_enum'
+
+  get 'location_controller/get_next_loc'
+
+  get 'location_controller/has_more_locs'
+
+  get 'location_controller/retrieve_all_locations'
+
+  get 'location_controller/get_weather_location'
+
+  get 'location_controller/get_weather_coordinate'
+
+  get 'location_controller/get_prediction_location'
+
+  get 'location_controller/get_prediction_coordinate'
+
+  get 'postcode_controller/get_weather'
+
+  get 'postcode_controller/get_prediction'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
