@@ -33,7 +33,7 @@ class Postcode < ActiveRecord::Base
     # Retrieve all active stations
     active_location_list = Location.where(active: true)
 
-    #Find the nearest stations to the regions in the given postcode
+    # Find the nearest stations to the regions in the given postcode
     nearest_location_list = Array.new
     given_postcode.each do |postcode|
       max_distance = 100000000000000
@@ -51,5 +51,4 @@ class Postcode < ActiveRecord::Base
     end
     return nearest_location_list
   end
-
 end
