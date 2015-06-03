@@ -1,4 +1,4 @@
-# vim:tw=2:sw=2:et
+# vim:sw=2:sts=2:et
 
 class Postcode < ActiveRecord::Base
   has_many :locations
@@ -7,6 +7,24 @@ class Postcode < ActiveRecord::Base
 
   def self.get_stations
 
+  end
+
+  def self.get_pcode lat, long
+    #Sorts Postcode in place according to distance from lat, long, and then
+    #returns the head of that list.
+    #TODO: See if there's a way to do this non-destructively.
+    Postcode.all.sort_by! { |pcode|
+      #Based on: http://www.movable-type.co.uk/scripts/latlong.html
+      r         = 6381000
+      phi1      = lat * Math::PI / 180
+      phi2      = pcode.lat * Math::PI / 180
+      dPhi      = (pcode.lat - lat) * Math::PI / 180
+      dLambda   = (pcode.long - long) * Math::PI / 180
+      a = Math.sin(dPhi/2) * Math.sin(dPhi/2) * Math.cos(phi1) *
+        Math.cos(phi2) * Math.sin(dLambda/2) * Math.sin(dLambda/2)
+      c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+      d = r * c
+    }
   end
 
   def self.find_nearest_location postcode
