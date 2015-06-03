@@ -25,8 +25,7 @@ class PostcodeController < ApplicationController
 			
 			hash = Hash.new
 			location_hash = Hash.new
-			measurement_hash = Hash.new
-			measurements = Hash.new
+			measurements = Array.new
 
 			hash["date"] = :date
 
@@ -36,12 +35,13 @@ class PostcodeController < ApplicationController
 			location_hash["last_update"] = nearest_active_station.updated_at
 
 			weathers.each do |weather|
+				measurement_hash = Hash.new
 				measurement_hash["time"] = weather.updated_at
 				measurement_hash["temp"] = weather.temperature
 				measurement_hash["precip"] = weather.rainfall
 				measurement_hash["wind_direction"] = weather.wind_dir
 				measurement_hash["wind_speed"] = weather.updated_at
-				measurements.merge!(measurement_hash)
+				measurements << measurement_hash
 			end
 
 			location_hash["measurements"] = measurements
