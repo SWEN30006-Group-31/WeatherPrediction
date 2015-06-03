@@ -12,6 +12,7 @@ class LocationController < ApplicationController
 
 	# '/weather/locations' directed here
 	def all_locations
+		locations = Location.all
 	end
 
 	### DO WE NEED BOTH OF THESE NEXT TWO?
@@ -31,7 +32,42 @@ class LocationController < ApplicationController
 	####### END METHODS IN PLAN ####
 
 	# '/weather/data/:location_id/:date' directed here
+
+	# Current_condition needs fix
 	def get_weather
+		location_id = params[:location_id]
+		date = params[:date]
+		location = Location.find(id: location_id)
+		current_time = Time.now
+		weather_obs_list = Observation.where(location_id: location_id, timestamp: :date)
+		latest_weather = weather_obs_list.last
+
+		if latest_weather.updated_at - current_time > 30
+			current_temp = "Null"
+		end
+
+		current_cond = "sunny"
+		if latest_weather.rainfall == 0
+			current_cond = "sunny"
+		end
+
+		hash = {}
+		hash["date"] = :date
+		hash["current_temp"] = current_temp
+		hash["current_cond"] = current_cond
+
+		weather_obs_list.each do |weather|
+			measurement_hash = Hash.new
+			measurement_hash["time"] = weather.updated_at
+			measurement_hash["temp"] = weather.temperature
+			measurement_hash["precip"] = weather.rainfall
+			measurement_hash["wind_direction"] = weather.wind_dir
+			measurement_hash["wind_speed"] = weather.updated_at
+			measurements << measurement_hash
+		end
+		hash["measurements"] = measurements
+
+		return hash
 	end
 
 	# '/weather/predicition/:lat/:long/:period' directed here

@@ -48,11 +48,12 @@ class PostcodeController < ApplicationController
 
 			hash["Locations"] = location_hash
 		else
-
+			hash = Hash.new
+			hash["date"] = :date
+			hash["Locations"] = "No active locations"
 		end
-		
 
-
+		return hash
 	end
 
 	# '/weather/predicition/:post_code/:period' directed here
