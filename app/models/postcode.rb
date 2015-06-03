@@ -13,7 +13,7 @@ class Postcode < ActiveRecord::Base
     #Sorts Postcode in place according to distance from lat, long, and then
     #returns the head of that list.
     #TODO: See if there's a way to do this non-destructively.
-    Postcode.all.sort_by! { |pcode|
+    (Postcode.all.sort_by! { |pcode|
       #Based on: http://www.movable-type.co.uk/scripts/latlong.html
       r         = 6381000
       phi1      = lat * Math::PI / 180
@@ -23,8 +23,7 @@ class Postcode < ActiveRecord::Base
       a = Math.sin(dPhi/2) * Math.sin(dPhi/2) * Math.cos(phi1) *
         Math.cos(phi2) * Math.sin(dLambda/2) * Math.sin(dLambda/2)
       c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-      d = r * c
-    }
+      d = r * c }).first
   end
 
   def self.find_nearest_location postcode
