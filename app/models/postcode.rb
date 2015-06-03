@@ -5,10 +5,6 @@ class Postcode < ActiveRecord::Base
   has_many :observations, :through => :locations
   has_many :predictions, :through => :locations
 
-  def self.get_stations
-
-  end
-
   def self.get_pcode lat, long
     #Sorts Postcode in place according to distance from lat, long, and then
     #returns the head of that list.
@@ -50,5 +46,8 @@ class Postcode < ActiveRecord::Base
       nearest_location_list << nearest_location
     end
     return nearest_location_list
+    ##########
+    # but doesn't this need to return the NEAREST? not ALL OF THEM?
+    ##########
   end
 end
