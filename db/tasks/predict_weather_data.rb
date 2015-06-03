@@ -296,20 +296,34 @@ namespace :predict do
     @observations = Observation.all
     @locations = Location.all
     arr_y_tem = []
+    arr_y_rain = []
+    arr_y_dew = []
+    arr_y_windspeed = []
     arr_x = []
     for location in @locations
       i = 0
       for record in location.observations
         arr_y_tem << record.temperature
+        arr_y_rain << record.reainfall
+        arr_y_dew << record.dew_point
+        arr_y_windspeed << record.wind_speed
         arr_x << i
         i+=1
 
         # to get the best fit
         # get the type of the best_fit regression
         # ["linear", distance, equation,coefficients]
-        function_info= Regression.new(arr_x, arr_y_tem).best_fit
+        function_info_tem= Regression.new(arr_x, arr_y_tem).best_fit
+        function_info_rain= Regression.new(arr_x, arr_y_rain).best_fit
+        function_info_dew= Regression.new(arr_x, arr_y_dew).best_fit
+        function_info_windspeed= Regression.new(arr_x, arr_y_windspeed).best_fit
         @prediction = Prediction.new
-        @prediction.temperature = getValue(function_info[0],arr_x,function_info[3])
+        @prediction.temperature = getValue(function_info_tem[0],arr_x,function_info_tem[3])
+        @prediction.rainfall = getValue(function_info_rain[0],arr_x,function_info_rain[3])
+        @prediction.dew_point = getValue(function_info_dew[0],arr_x,function_info_dew[3])
+        @prediction.wind_speed = getValue(function_info_windspeed[0],arr_x,function_info_windspeed[3])
+        @prediction.save()
+
       end
     end
 
@@ -344,17 +358,6 @@ namespace :predict do
 
     end
 
-
-
-
-
-
   end
-
-
-
-
-
-
 
 end
