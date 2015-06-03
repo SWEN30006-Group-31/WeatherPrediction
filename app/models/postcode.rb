@@ -30,7 +30,6 @@ class Postcode < ActiveRecord::Base
     active_location_list = Location.where(active: true)
 
     # Find the nearest stations to the regions in the given postcode
-    nearest_location_list = Array.new
     given_postcode.each do |postcode|
       max_distance = 100000000000000
       nearest_location = Location.new
@@ -42,12 +41,7 @@ class Postcode < ActiveRecord::Base
           nearest_location = location
         end
       end
-      # Put the nearest in the list
-      nearest_location_list << nearest_location
     end
-    return nearest_location_list
-    ##########
-    # but doesn't this need to return the NEAREST? not ALL OF THEM?
-    ##########
+    return nearest_location
   end
 end
