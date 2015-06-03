@@ -1,23 +1,24 @@
 Rails.application.routes.draw do
-  get 'location_controller/init_enum'
 
-  get 'location_controller/get_next_loc'
 
-  get 'location_controller/has_more_locs'
+  # json api routes
+  get '/weather/locations', to: 'location#all_locations'
 
-  get 'location_controller/retrieve_all_locations'
+  get '/weather/data/:location_id/:date', to: 'location#get_weather'
 
-  get 'location_controller/get_weather_location'
+  get '/weather/data/:post_code/:date', to: 'postcode#get_weather'
 
-  get 'location_controller/get_weather_coordinate'
+  get '/weather/predicition/:post_code/:period', to: 'postcode#get_prediction'
 
-  get 'location_controller/get_prediction_location'
+  get '/weather/predicition/:lat/:long/:period', to: 'location#get_prediction'
 
-  get 'location_controller/get_prediction_coordinate'
+  # web interface routes
+  get '/', to: 'home#index'
+  get '/index', to: 'home#index'
+  get '/weather', to: 'home#index'
 
-  get 'postcode_controller/get_weather'
+  # result routing not necessary? maybe?
 
-  get 'postcode_controller/get_prediction'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
