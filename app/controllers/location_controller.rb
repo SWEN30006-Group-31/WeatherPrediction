@@ -14,7 +14,11 @@ class LocationController < ApplicationController
 
   # '/weather/locations' directed here
   def all_locations
-    locations = Location.all
+    @locations = Location.all
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   ### DO WE NEED BOTH OF THESE NEXT TWO?

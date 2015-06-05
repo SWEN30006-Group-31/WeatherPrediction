@@ -1,15 +1,16 @@
 Rails.application.routes.draw do
 
+
   # json api routes
   get '/weather/locations', to: 'location#all_locations'
 
-  get '/weather/data/:post_code/:date', to: 'postcode#get_weather', constraints: { post_code: /3[0-9]{3}/ }
+  get '/weather/data/:post_code/:date', to: 'postcode#get_weather', constraints: { post_code: /3[0-9]{3}/, date: /(0[1-9]|[12][0-9]|3[01])[-.](0[1-9]|1[012])[-.](19|20)\d\d/ }
 
-  get '/weather/data/:location_id/:date', to: 'location#get_weather'
+  get '/weather/data/:location_id/:date', to: 'location#get_weather', constraints: { date: /(0[1-9]|[12][0-9]|3[01])[-.](0[1-9]|1[012])[-.](19|20)\d\d/ }
 
-  get '/weather/predicition/:post_code/:period', to: 'postcode#get_prediction'
+  get '/weather/predicition/:post_code/:period', to: 'postcode#get_prediction', constraints: { post_code: /3[0-9]{3}/, period: /[10|30|60|120|180]/ }
 
-  get '/weather/predicition/:lat/:long/:period', to: 'location#get_prediction'
+  get '/weather/predicition/:lat/:long/:period', to: 'location#get_prediction', constraints: { lat: /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)/, long: /[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)/, period: /[10|30|60|120|180]/ }
 
   # web interface routes
   get '/', to: 'home#index'

@@ -58,6 +58,5 @@ class PostcodeController < ApplicationController
   def get_prediction
 
   end
-
-  ####### END METHODS IN PLAN ####
+  
 end
