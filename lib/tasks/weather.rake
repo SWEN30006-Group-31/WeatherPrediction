@@ -34,11 +34,11 @@ namespace :weather do
       lon = $2.to_f
 
       # Update the location in the DB.
-      location = Location.find_or_initialize_by(name: name)
-      location.lat = lat
-      location.lon = lon
-      location.active = true
-      location.save if location.changed?
+      Location.find_or_create_by(name: name) do |loc|
+        loc.lat     = lat
+        loc.lon     = lon
+        loc.active  = true
+      end
 
       active_location_ids << location.id
     end
