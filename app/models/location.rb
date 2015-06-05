@@ -38,7 +38,7 @@ class Location < ActiveRecord::Base
 
   # get the last update for the location 
   def last_update
-    self.observations.last.timestamp
+    (self.observations.sort_by { |obs| obs.timestamp }).last.timestamp
   end
 
 end
