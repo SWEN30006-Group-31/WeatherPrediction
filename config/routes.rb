@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   # json api routes
   get '/weather/locations', to: 'location#all_locations'
 
