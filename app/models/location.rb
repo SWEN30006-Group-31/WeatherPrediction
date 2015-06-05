@@ -18,3 +18,4 @@ class Location < ActiveRecord::Base
 		return observationData
 	
 	end
+end
