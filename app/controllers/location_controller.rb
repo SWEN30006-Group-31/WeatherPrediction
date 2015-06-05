@@ -41,14 +41,14 @@ class LocationController < ApplicationController
 
   # Current_condition needs fix
   def get_weather
-    location_id = params[:location_id]
-    date = params[:date]
-    location = Location.find(id: location_id)
+    location_id = params[:location_id].to_i
+    date = Date.parse(params[:date])
+    location = Location.find(location_id)
     current_time = Time.now
-    weather_obs_list = Observation.where(location_id: location_id, timestamp: :date)
+    weather_obs_list = Observation.where(location_id: location_id, timestamp: date)
     latest_weather = weather_obs_list.last
 
-    if latest_weather.updated_at - current_time > 30
+    if latest_weather == nil || latest_weather.updated_at - current_time > 30
       current_temp = "Null"
     end
 
@@ -57,11 +57,12 @@ class LocationController < ApplicationController
       current_cond = "sunny"
     end
 
-    hash = {}
-    hash["date"] = :date
-    hash["current_temp"] = current_temp
-    hash["current_cond"] = current_cond
+    @hash = {}
+    @hash["date"] = :date
+    @hash["current_temp"] = current_temp
+    @hash["current_cond"] = current_cond
 
+    measurements = Array.new
     weather_obs_list.each do |weather|
       measurement_hash = Hash.new
       measurement_hash["time"] = weather.updated_at
@@ -71,9 +72,7 @@ class LocationController < ApplicationController
       measurement_hash["wind_speed"] = weather.updated_at
       measurements << measurement_hash
     end
-    hash["measurements"] = measurements
-
-    return hash
+    @hash["measurements"] = measurements
   end
 
   # '/weather/predicition/:lat/:long/:period' directed here

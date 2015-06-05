@@ -21,7 +21,7 @@ class PostcodeController < ApplicationController
       end
     end
     if found == true
-      weathers = Observation.where(location_id: nearest_active_station.id, timestamp: :date)
+      weathers = Observation.where(location_id: nearest_active_station.id, timestamp: date)
 
       @hash = Hash.new
       location_hash = Hash.new
