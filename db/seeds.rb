@@ -14,7 +14,10 @@
 require 'csv'
 
 def load_postcode_database
-  return list = CSV.read('db/postcode.csv')
+  #Timings from jdenholm@bowman-arch:
+  # postcode.csv: 6.60s user, 0.90s system, 2% cpu, 4:22.95 total
+  # postcode_uniq.csv: 2.16s user, 0.25 system, 3% cpu, 1:04.45 total
+  return list = CSV.read('db/postcode_uniq.csv')
 end
 
 def add_postcodes_from_file
