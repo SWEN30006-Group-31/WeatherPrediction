@@ -15,6 +15,9 @@
 /log/*
 !/log/.keep
 /tmp
+# vim backup, temp files
+*~
+.*.swp
 
 # Ignore USELESS ds_store files
 .DS_Store
