@@ -12,10 +12,11 @@ class Location < ActiveRecord::Base
 	# not sure if its correct and Why do we need this method?
 	# return a collection of observations given a date
 	def retrive_observation time
-		observationData = observations.where("timestamp = #{time}")
+		date = time
+		observationData = Observations.where(timestamp: :date)
 		return observationData
 	end
-
+	
 	# get the last update for the location 
 	def last_update
 		self.observations.last.timestamp

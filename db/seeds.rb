@@ -25,20 +25,19 @@ def add_postcodes_from_file
 
   # Get the list of postcodes from the csv file.
   postcode_list = load_postcode_database
-  postcode_list.each do |postcode|
+  postcode_list.each do |csv_line|
     # Retrieve the postcode's information
-    code = postcode[0].to_i
-    name = postcode[1].to_s
-    lat = postcode[2].to_f
-    lon = postcode[3].to_f
+    code = csv_line[0].to_i
+    name = csv_line[1].to_s
+    lat = csv_line[2].to_f
+    lon = csv_line[3].to_f
 
-    postcode = Postcode.find_or_initialize_by(code: code)
-    postcode.code = code
-    postcode.name = name
-    postcode.lat = lat
-    postcode.lon = lon
-
-    postcode.save
+    # Put it in the database
+    Postcode.find_or_create_by(code: code) do |pcode|
+      pcode.name  = name
+      pcode.lat   = lat
+      pcode.lon   = lon
+    end
   end
 end
 
