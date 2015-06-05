@@ -1,3 +1,5 @@
+# vim:sts=2:sw=2:et
+
 require 'nokogiri'
 require 'open-uri'
 require 'json'

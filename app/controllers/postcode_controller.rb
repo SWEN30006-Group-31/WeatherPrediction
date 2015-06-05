@@ -1,65 +1,67 @@
+# vim:sts=2:sw=2:et
+
 require 'json'
 
 class PostcodeController < ApplicationController
-	
-	####### METHODS IN PLAN ########
 
-	# '/weather/data/:post_code/:date' directed here
-	def get_weather
-		postcode = params[:postcode]
-		date = params[:date]
-		district = Postcode.find(code: postcode)
-		active_stations = Location.where(active: true)
-		nearest_active_station = Location.new
-		found = false
-		active_stations.each do |station|
-			lat_diff = ((station.lat - district.lat)**2)**0.5
-			long_diff = ((station.lon - district.long)**2)**0.5
-			if lat_diff < 0.01 && long_diff < 0.01
-				found = true
-				nearest_active_station = station
-			end
-		end
-		if found == true
-			weathers = Observation.where(location_id: nearest_active_station.id, timestamp: :date)
-			
-			hash = Hash.new
-			location_hash = Hash.new
-			measurements = Array.new
+  ####### METHODS IN PLAN ########
 
-			hash["date"] = :date
+  # '/weather/data/:post_code/:date' directed here
+  def get_weather
+    postcode = params[:postcode]
+    date = params[:date]
+    district = Postcode.find(code: postcode)
+    active_stations = Location.where(active: true)
+    nearest_active_station = Location.new
+    found = false
+    active_stations.each do |station|
+      lat_diff = ((station.lat - district.lat)**2)**0.5
+      long_diff = ((station.lon - district.long)**2)**0.5
+      if lat_diff < 0.01 && long_diff < 0.01
+        found = true
+        nearest_active_station = station
+      end
+    end
+    if found == true
+      weathers = Observation.where(location_id: nearest_active_station.id, timestamp: :date)
 
-			location_hash["id"] = nearest_active_station.name
-			location_hash["lat"] = nearest_active_station.lat
-			location_hash["lon"] = nearest_active_station.lon
-			location_hash["last_update"] = nearest_active_station.updated_at
+      hash = Hash.new
+      location_hash = Hash.new
+      measurements = Array.new
 
-			weathers.each do |weather|
-				measurement_hash = Hash.new
-				measurement_hash["time"] = weather.updated_at
-				measurement_hash["temp"] = weather.temperature
-				measurement_hash["precip"] = weather.rainfall
-				measurement_hash["wind_direction"] = weather.wind_dir
-				measurement_hash["wind_speed"] = weather.updated_at
-				measurements << measurement_hash
-			end
+      hash["date"] = :date
 
-			location_hash["measurements"] = measurements
+      location_hash["id"] = nearest_active_station.name
+      location_hash["lat"] = nearest_active_station.lat
+      location_hash["lon"] = nearest_active_station.lon
+      location_hash["last_update"] = nearest_active_station.updated_at
 
-			hash["Locations"] = location_hash
-		else
-			hash = Hash.new
-			hash["date"] = :date
-			hash["Locations"] = "No active locations"
-		end
+      weathers.each do |weather|
+        measurement_hash = Hash.new
+        measurement_hash["time"] = weather.updated_at
+        measurement_hash["temp"] = weather.temperature
+        measurement_hash["precip"] = weather.rainfall
+        measurement_hash["wind_direction"] = weather.wind_dir
+        measurement_hash["wind_speed"] = weather.updated_at
+        measurements << measurement_hash
+      end
 
-		return hash
-	end
+      location_hash["measurements"] = measurements
 
-	# '/weather/predicition/:post_code/:period' directed here
-	def get_prediction
-		
-	end
-	
-	####### END METHODS IN PLAN ####
+      hash["Locations"] = location_hash
+    else
+      hash = Hash.new
+      hash["date"] = :date
+      hash["Locations"] = "No active locations"
+    end
+
+    return hash
+  end
+
+  # '/weather/predicition/:post_code/:period' directed here
+  def get_prediction
+
+  end
+
+  ####### END METHODS IN PLAN ####
 end
