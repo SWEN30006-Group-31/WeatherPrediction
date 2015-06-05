@@ -34,7 +34,7 @@ namespace :weather do
       lon = $2.to_f
 
       # Update the location in the DB.
-      Location.find_or_create_by(name: name) do |loc|
+      location = Location.find_or_create_by(name: name) do |loc|
         loc.lat     = lat
         loc.lon     = lon
         loc.active  = true
