@@ -18,7 +18,7 @@ end
 #   return list = CSV.read('vicpost.csv')
 # end
 
-# namespace :weather do
+namespace :weather do
 #   # Update the postcode in the DB from the csv file.
 #   task :update_postcodes => :environment do
 #     active_postcode_ids = Set.new
