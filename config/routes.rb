@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   # json api routes
   get '/weather/locations', to: 'location#all_locations'
 
-  get '/weather/data/:location_id/:date', to: 'location#get_weather'
+  get '/weather/data/:post_code/:date', to: 'postcode#get_weather', constraints: { post_code: /3[0-9]{3}/ }
 
-  get '/weather/data/:post_code/:date', to: 'postcode#get_weather'
+  get '/weather/data/:location_id/:date', to: 'location#get_weather'
 
   get '/weather/predicition/:post_code/:period', to: 'postcode#get_prediction'
 

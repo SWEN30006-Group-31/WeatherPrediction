@@ -14,33 +14,33 @@ def load_bom_info_table
   melb_doc.css("#tMELBOURNE").first
 end
 
-# def load_postcode_database
-#   return list = CSV.read('vicpost.csv')
-# end
+def load_postcode_database
+  return list = CSV.read('vicpost.csv')
+end
 
 namespace :weather do
-#   # Update the postcode in the DB from the csv file.
-#   task :update_postcodes => :environment do
-#     active_postcode_ids = Set.new
+  # Update the postcode in the DB from the csv file.
+  task :update_postcodes => :environment do
+    active_postcode_ids = Set.new
 
-#     # Get the list of postcodes from the csv file.
-#     postcode_list = load_postcode_database
-#     postcode_list.each do |postcode|
-#       # Retrieve the postcode's information
-#       code = postcode[0].to_i
-#       name = postcode[1].to_s
-#       lat = postcode[2].to_f
-#       long = postcode[3].to_f
+    # Get the list of postcodes from the csv file.
+    postcode_list = load_postcode_database
+    postcode_list.each do |postcode|
+      # Retrieve the postcode's information
+      code = postcode[0].to_i
+      name = postcode[1].to_s
+      lat = postcode[2].to_f
+      long = postcode[3].to_f
 
-#       postcode = Postcode.find_or_initialize_by(code: code)
-#       postcode.code = code
-#       postcode.name = name
-#       postcode.lat = lat
-#       postcode.long = long
+      postcode = Postcode.find_or_initialize_by(code: code)
+      postcode.code = code
+      postcode.name = name
+      postcode.lat = lat
+      postcode.long = long
 
-#       psotcode.save if psotcode.changed?
-#     end
-#   end
+      psotcode.save if psotcode.changed?
+    end
+  end
 
   # Update the locations in the DB from BOM. Marks any locations that have disappeared as inactive.
   task :update_locations => :environment do
