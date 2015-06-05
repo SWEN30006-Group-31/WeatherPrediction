@@ -35,7 +35,7 @@ namespace :weather do
 
       # Update the location in the DB.
       #location = Location.find_or_create_by(name: name) do |loc|
-      location = Postcode.get_pcode(lat, lon).locations.find_or_create_by(name: name) do |loc|
+      location = Postcode.get_nearest_pcode(lat, lon).locations.find_or_create_by(name: name) do |loc|
         loc.lat     = lat
         loc.lon     = lon
         loc.active  = true
