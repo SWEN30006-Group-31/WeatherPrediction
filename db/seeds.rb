@@ -9,7 +9,7 @@
 
 
 ########### GET DEM POSTCODES ROCKIN #############
-require 'CSV'
+require 'csv'
 
 def load_postcode_database
   return list = CSV.read('db/postcode.csv')
