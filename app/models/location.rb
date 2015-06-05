@@ -2,7 +2,6 @@ class Location < ActiveRecord::Base
 	belongs_to :postcode
 	has_many :observations
 	has_many :predictions
-	has_many :weather_batches, :through => :observations
 	has_many :sources, :through => :observations
 
 	# return a collection of active locations
@@ -15,5 +14,10 @@ class Location < ActiveRecord::Base
 	def retrive_observation time
 		observationData = observations.where("timestamp = #{time}")
 		return observationData
+	end
+
+	# get the last update for the location 
+	def last_update
+		self.observations.last.timestamp
 	end
 end
