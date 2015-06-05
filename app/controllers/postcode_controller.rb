@@ -27,7 +27,7 @@ class PostcodeController < ApplicationController
       location_hash = Hash.new
       measurements = Array.new
 
-      @hash["date"] = :date
+      @hash["date"] = date
 
       location_hash["id"] = nearest_active_station.name
       location_hash["lat"] = nearest_active_station.lat

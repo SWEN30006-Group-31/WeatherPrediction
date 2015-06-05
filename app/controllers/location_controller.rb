@@ -58,7 +58,7 @@ class LocationController < ApplicationController
     end
 
     @hash = {}
-    @hash["date"] = :date
+    @hash["date"] = date
     @hash["current_temp"] = current_temp
     @hash["current_cond"] = current_cond
 
