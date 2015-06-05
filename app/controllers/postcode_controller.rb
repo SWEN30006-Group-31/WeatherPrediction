@@ -23,11 +23,11 @@ class PostcodeController < ApplicationController
     if found == true
       weathers = Observation.where(location_id: nearest_active_station.id, timestamp: :date)
 
-      hash = Hash.new
+      @hash = Hash.new
       location_hash = Hash.new
       measurements = Array.new
 
-      hash["date"] = :date
+      @hash["date"] = :date
 
       location_hash["id"] = nearest_active_station.name
       location_hash["lat"] = nearest_active_station.lat
@@ -46,11 +46,11 @@ class PostcodeController < ApplicationController
 
       location_hash["measurements"] = measurements
 
-      hash["Locations"] = location_hash
+      @hash["Locations"] = location_hash
     else
-      hash = Hash.new
-      hash["date"] = :date
-      hash["Locations"] = "No active locations"
+      @hash = Hash.new
+      @hash["date"] = :date
+      @hash["Locations"] = "No active locations"
     end
   end
 
