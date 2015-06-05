@@ -1,8 +1,8 @@
+# vim:sts=2:sw=2:et
+
 require 'json'
 
 class PostcodeController < ApplicationController
-	
-	####### METHODS IN PLAN ########
 
 	# '/weather/data/:post_code/:date' directed here
 	def get_weather
@@ -27,39 +27,37 @@ class PostcodeController < ApplicationController
 			location_hash = Hash.new
 			measurements = Array.new
 
-			hash["date"] = :date
+      hash["date"] = :date
 
-			location_hash["id"] = nearest_active_station.name
-			location_hash["lat"] = nearest_active_station.lat
-			location_hash["lon"] = nearest_active_station.lon
-			location_hash["last_update"] = nearest_active_station.updated_at
+      location_hash["id"] = nearest_active_station.name
+      location_hash["lat"] = nearest_active_station.lat
+      location_hash["lon"] = nearest_active_station.lon
+      location_hash["last_update"] = nearest_active_station.updated_at
 
-			weathers.each do |weather|
-				measurement_hash = Hash.new
-				measurement_hash["time"] = weather.updated_at
-				measurement_hash["temp"] = weather.temperature
-				measurement_hash["precip"] = weather.rainfall
-				measurement_hash["wind_direction"] = weather.wind_dir
-				measurement_hash["wind_speed"] = weather.updated_at
-				measurements << measurement_hash
-			end
+      weathers.each do |weather|
+        measurement_hash = Hash.new
+        measurement_hash["time"] = weather.updated_at
+        measurement_hash["temp"] = weather.temperature
+        measurement_hash["precip"] = weather.rainfall
+        measurement_hash["wind_direction"] = weather.wind_dir
+        measurement_hash["wind_speed"] = weather.updated_at
+        measurements << measurement_hash
+      end
 
-			location_hash["measurements"] = measurements
+      location_hash["measurements"] = measurements
 
-			hash["Locations"] = location_hash
-		else
-			hash = Hash.new
-			hash["date"] = :date
-			hash["Locations"] = "No active locations"
-		end
+      hash["Locations"] = location_hash
+    else
+      hash = Hash.new
+      hash["date"] = :date
+      hash["Locations"] = "No active locations"
+    end
+  end
 
-		return hash
-	end
+  # '/weather/predicition/:post_code/:period' directed here
+  def get_prediction
 
-	# '/weather/predicition/:post_code/:period' directed here
-	def get_prediction
-		
-	end
-	
-	####### END METHODS IN PLAN ####
+  end
+
+  ####### END METHODS IN PLAN ####
 end
