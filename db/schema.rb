@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602144713) do
+ActiveRecord::Schema.define(version: 20150605141300) do
 
   create_table "locations", force: :cascade do |t|
     t.string   "name"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150602144713) do
     t.float    "rainfall"
     t.float    "wind_speed"
     t.float    "wind_dir"
-    t.date     "timestamp"
+    t.datetime "timestamp"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "location_id"

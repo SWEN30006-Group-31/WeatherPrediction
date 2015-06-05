@@ -7,7 +7,7 @@ class Postcode < ActiveRecord::Base
 
   #TODO: Put the distance code into a separate module for re-use.
 
-  def self.get_nearest_pcode lat, lon
+  def self.get_nearest lat, lon
     #Sorts Postcode in place according to distance from lat, long, and then
     #returns the head of that list.
     (Postcode.all.sort_by { |pcode|

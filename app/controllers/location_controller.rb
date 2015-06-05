@@ -14,6 +14,9 @@ class LocationController < ApplicationController
 
   # '/weather/locations' directed here
   def all_locations
+    if not (params[:web] =~ /true/)
+      request.format = :json
+    end
     @locations = Location.all
     respond_to do |format|
       format.html
@@ -79,19 +82,4 @@ class LocationController < ApplicationController
   def get_prediction
   end
 
-  # MOVED FROM LOCATION MODEL
-  # function to find the nearest location given lat+long
-  def find_nearest_location lat, long
-    active_locations = Location.where(active: true)
-    max_distance = 10000000000
-    nearest_location = Location.new
-    active_locations.each do |location|
-      distance = (location.lat - lat )**2 + (location.lon - long)**2
-      if distance < max_distance
-        max_distance = distance
-        nearest_location = location
-      end
-    end
-    return nearest_location
-  end
 end
