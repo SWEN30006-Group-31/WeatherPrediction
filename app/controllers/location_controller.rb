@@ -14,6 +14,9 @@ class LocationController < ApplicationController
 
   # '/weather/locations' directed here
   def all_locations
+    if not (params[:web] =~ /true/)
+      request.format = :json
+    end
     @locations = Location.all
     respond_to do |format|
       format.html
