@@ -1,7 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
 require 'json'
-require 'CSV'
 
 BOM_BASE_URL = 'http://www.bom.gov.au'
 FIO_BASE_URL = 'https://api.forecast.io/forecast'
