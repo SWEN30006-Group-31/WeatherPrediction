@@ -51,8 +51,10 @@ class LocationController < ApplicationController
     weather_obs_list = Observation.where(location_id: location_id)
     latest_weather = weather_obs_list.last
 
-    if latest_weather.updated_at - current_time > 30
+    if (latest_weather.updated_at - current_time).to_i.abs > 30*60
       current_temp = "Null"
+    else
+      current_temp = latest_weather.temperature
     end
 
     current_cond = "sunny"

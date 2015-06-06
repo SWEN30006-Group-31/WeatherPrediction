@@ -52,7 +52,7 @@ class PostcodeController < ApplicationController
     else
       @hash = Hash.new
       @hash["date"] = date
-      @hash["Locations"] = "No active locations"
+      @hash["Locations"] = "No active locations in the given postcode area"
     end
   end
 
