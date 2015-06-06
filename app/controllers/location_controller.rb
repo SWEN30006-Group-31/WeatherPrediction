@@ -48,16 +48,18 @@ class LocationController < ApplicationController
     date = Date.parse(params[:date])
     location = Location.find(location_id)
     current_time = Time.now
-    weather_obs_list = Observation.where(location_id: location_id, timestamp: date)
+    weather_obs_list = Observation.where(location_id: location_id)
     latest_weather = weather_obs_list.last
 
-    if latest_weather == nil || latest_weather.updated_at - current_time > 30
+    if latest_weather.updated_at - current_time > 30
       current_temp = "Null"
     end
 
     current_cond = "sunny"
     if latest_weather.rainfall == 0
       current_cond = "sunny"
+    else
+      current_cond = "raining"
     end
 
     @hash = {}
@@ -67,13 +69,15 @@ class LocationController < ApplicationController
 
     measurements = Array.new
     weather_obs_list.each do |weather|
-      measurement_hash = Hash.new
-      measurement_hash["time"] = weather.updated_at
-      measurement_hash["temp"] = weather.temperature
-      measurement_hash["precip"] = weather.rainfall
-      measurement_hash["wind_direction"] = weather.wind_dir
-      measurement_hash["wind_speed"] = weather.updated_at
-      measurements << measurement_hash
+      if weather.timestamp.to_date == date
+        measurement_hash = Hash.new
+        measurement_hash["time"] = weather.updated_at
+        measurement_hash["temp"] = weather.temperature
+        measurement_hash["precip"] = weather.rainfall
+        measurement_hash["wind_direction"] = weather.wind_dir
+        measurement_hash["wind_speed"] = weather.wind_speed
+        measurements << measurement_hash
+      end
     end
     @hash["measurements"] = measurements
   end
